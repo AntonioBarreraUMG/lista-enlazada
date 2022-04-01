@@ -1,49 +1,59 @@
 package org.openjfx.progra3clase8;
 
-public class ClsLista {
-    public Nodo primero;
+public class ClsLista<T> {
+    public Nodo<T> primero;
 
-    public ClsLista(ClsAlumno dato) {
-        primero = new Nodo(dato, primero);
+    public ClsLista(T dato) {
+        primero = new Nodo<T>(dato, primero);
     }
     
-    public ClsLista insertarCabezaLista(ClsAlumno entrada) {
-        Nodo nuevo;
-        nuevo = new Nodo(entrada);
+    public ClsLista<T> insertarCabezaLista(T entrada) {
+        Nodo<T> nuevo;
+        nuevo = new Nodo<T>(entrada);
         nuevo.enlace = primero;
         primero = nuevo;
         return this;
     }
     
-    public ClsLista insertarUltimoLista(Nodo ultimo, ClsAlumno entrada) {
-        ultimo.enlace = new Nodo(entrada);
+    public ClsLista<T> insertarUltimoLista(T entrada) {
+        Nodo<T> ultimo = buscarCola();
+        ultimo.enlace = new Nodo<T>(entrada);
         ultimo = ultimo.enlace;
         return this;
     }
     
-    public Nodo buscarLista(String valorBuscar) {
-        Nodo indice;
+    public ClsLista<T> insertarLista(T valorBuscarInsertar, T entrada) {
+        Nodo<T> nuevo, anterior;
+        anterior = buscarLista(valorBuscarInsertar);
+        if (anterior != null) {
+            nuevo = new Nodo<T>(entrada);
+            nuevo.enlace = anterior.enlace;
+            anterior.enlace = nuevo;
+        }
+        return this;
+    }
+
+    public Nodo<T> buscarCola() {
+        Nodo<T> actual = this.primero;
+        while(actual != null && actual.getEnlace() != null) {
+            actual = actual.getEnlace();
+        }
+        return actual;
+    }
+    
+    public Nodo<T> buscarLista(T objetoBuscar) {
+        Nodo<T> indice;
         for (indice = primero; indice != null; indice = indice.enlace) {
-            if (valorBuscar.equalsIgnoreCase(indice.alumno.nombre)) {
+            if (indice.getDato().equals(objetoBuscar)) {
                 return indice;
             }
         }
         return null;
     }
     
-    public ClsLista insertarLista(String valorBuscarInsertar, ClsAlumno entrada) {
-        Nodo nuevo, anterior;
-	    anterior = buscarLista(valorBuscarInsertar);
-        if (anterior != null) {
-            nuevo = new Nodo(entrada);
-            nuevo.enlace = anterior.enlace;
-            anterior.enlace = nuevo;
-        }
-	    return this;
-    }
 
-    public Nodo buscarPosicion(int posicion) {
-        Nodo indice;
+    public Nodo<T> buscarPosicion(int posicion) {
+        Nodo<T> indice;
         int i;
         if (posicion < 0) return null;
         indice = primero;
@@ -53,14 +63,14 @@ public class ClsLista {
         return indice;
     }
 
-    public void eliminar(String entrada) {
-        Nodo actual, anterior;
+    public void eliminar(T entrada) {
+        Nodo<T> actual, anterior;
         boolean encontrado;
         actual = primero;
         anterior = null;
         encontrado = false;
         while ((actual != null) && (!encontrado)) {
-            encontrado = entrada.equalsIgnoreCase(actual.alumno.nombre);
+            encontrado = actual.getDato().equals(entrada);
             if (!encontrado) {
                 anterior = actual;
                 actual = actual.enlace;
@@ -77,11 +87,11 @@ public class ClsLista {
     }
     
     public void visualizar() {
-        Nodo n;
+        Nodo<T> n;
         int k = 0;
         n = primero;
         while (n != null) {
-            System.out.println(n.alumno.toString() + " ");
+            System.out.println(n.getDato().toString() + " ");
             n = n.enlace;
             k++;
             System.out.print(k % 15 != 0 ? " " : "\n");

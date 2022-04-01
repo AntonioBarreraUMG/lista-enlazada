@@ -12,7 +12,7 @@ package org.openjfx.progra3clase8;
 public class Main {
     public static void main(String[] args) {
         
-        ClsLista lista = new ClsLista(new ClsAlumno("465", "Antonio", 89.45));
+        ClsLista<ClsAlumno> lista = new ClsLista<>(new ClsAlumno("465", "Antonio", 89.45));
 
         //LLENAR LISTA
         lista.insertarCabezaLista(new ClsAlumno("354", "Carlos", 79.35));        
@@ -29,47 +29,46 @@ public class Main {
         lista.visualizar();
         
         //INSERTAR CABEZA
-        String nombreInsertarCabeza = "Maria";
+        ClsAlumno alumnoInsertarCabeza = new ClsAlumno("987", "Maria", 88.55);
         System.out.println("\n--------------------------------------------");
-        lista.insertarCabezaLista(new ClsAlumno("987", nombreInsertarCabeza, 88.55));
-        System.out.println("*** INSERTAR EN CABEZA A "+ nombreInsertarCabeza +" ***");
+        lista.insertarCabezaLista(alumnoInsertarCabeza);
+        System.out.println("*** INSERTAR EN CABEZA A "+ alumnoInsertarCabeza.nombre +" ***");
         lista.visualizar();
 
         //INSERTAR COLA
-        String nombreInsertarCola = "Eduardo";
-        Nodo ultimo = lista.buscarPosicion(11);
-        lista.insertarUltimoLista(ultimo, new ClsAlumno("376", nombreInsertarCola, 78.87));
+        ClsAlumno objetoInsertarCola = new ClsAlumno("376", "Eduardo", 78.87);
+        lista.insertarUltimoLista(objetoInsertarCola);
         System.out.println("\n--------------------------------------------");
-        System.out.println("*** INSERTAR EN COLA A "+ nombreInsertarCola +" ***");
+        System.out.println("*** INSERTAR EN COLA A "+ objetoInsertarCola.nombre +" ***");
         lista.visualizar();
 
         //INSERTAR ENMEDIO
-        String nombreAnterior = "Linda";
-        String insertarNombreEnmedio = "Victor";
-        lista.insertarLista(nombreAnterior, new ClsAlumno("254",insertarNombreEnmedio , 77.45));
+        ClsAlumno objetoAnterior = new ClsAlumno("835", "Linda", 85.50);
+        ClsAlumno objetoInsertarEnmedio = new ClsAlumno("254", "Victor", 77.45);
+        lista.insertarLista(objetoAnterior, objetoInsertarEnmedio);
         System.out.println("\n--------------------------------------------");
-        System.out.println("*** INSERTAR LUEGO DE "+ nombreAnterior +" A "+ insertarNombreEnmedio +" ***");
+        System.out.println("*** INSERTAR LUEGO DE "+ objetoAnterior.nombre +" A "+ objetoInsertarEnmedio.nombre +" ***");
         lista.visualizar();
 
         //BUSCAR NOMBRE
-        String nombreBuscar = "Daniela";
-        Nodo alumno = lista.buscarLista(nombreBuscar);
+        ClsAlumno objetoBuscar = new ClsAlumno("657", "Daniela", 65.10);
+        Nodo<ClsAlumno> objetoEncontrado = lista.buscarLista(objetoBuscar);
         System.out.println("\n--------------------------------------------");
-        System.out.println("*** BUSCAR A "+ nombreBuscar +" ***");
-        System.out.println(alumno.alumno.toString());
+        System.out.println("*** BUSCAR A "+ objetoBuscar.nombre +" ***");
+        System.out.println(objetoEncontrado.getDato().toString());
 
         //BUSCAR POSICION
-        int posicion = 4;
-        Nodo encontrado = lista.buscarPosicion(posicion);
+        int posicionBuscar = 4;
+        Nodo<ClsAlumno> posicionEncontra = lista.buscarPosicion(posicionBuscar);
         System.out.println("\n--------------------------------------------");
-        System.out.println("*** BUSCAR EN POSICION "+ posicion +" ***");
-        System.out.println(encontrado.alumno.toString());
+        System.out.println("*** BUSCAR EN POSICION "+ posicionBuscar +" ***");
+        System.out.println(posicionEncontra.getDato().toString());
 
         //ELIMINAR
-        String nombreEliminar = "Jesus";
-        lista.eliminar(nombreEliminar);
+        ClsAlumno alumnoEliminar = new ClsAlumno("254", "Jesus", 55.46);
+        lista.eliminar(alumnoEliminar);
         System.out.println("\n--------------------------------------------");
-        System.out.println("*** ELIMINAR A "+ nombreEliminar +" ***");
+        System.out.println("*** ELIMINAR A "+ alumnoEliminar.nombre +" ***");
         lista.visualizar();
     }
 }
